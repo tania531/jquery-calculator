@@ -1,0 +1,29 @@
+/* Put your css in here */
+
+#outer {
+  border: 1px solid black;
+  width: 350px;
+	height: 400px;
+  margin-top:10px;
+}
+#display {
+  border: 1px solid blue;
+  height: 30px;
+  margin: 20px 0 10px 20px;
+  width: 272px;
+}
+.col-md-3, .col-sm-3, .col-xs-3{
+  border: 1px solid grey;
+  padding:20px;
+}
+#buttons {
+  width: 80%;
+  /*margin:auto 0;*/
+  text-align:center;
+  margin-bottom:10px;
+  height:200px;
+
+}
+.row {
+  margin-left: 20px;
+}
