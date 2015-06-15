@@ -5,6 +5,7 @@
   width: 350px;
 	height: 480px;
   margin-top:10px;
+  background-color: rgb(138, 161, 161);
 }
 #display {
   border: 2px solid grey;
@@ -14,12 +15,15 @@
   font-size: 30px;
   padding:10px 0 10px 10px;
   vertical-align: middle;
-
+  background-color:  rgb(202, 224, 224);
+  color: rgb(78, 46, 109);
+  font-weight: bold;
 }
 .col-md-3, .col-sm-3, .col-xs-3{
   border: 1px solid grey;
   padding:20px;
   font-size: 24px;
+  background-color: rgb(203, 191, 194);
 }
 #buttons {
   width: 90%;

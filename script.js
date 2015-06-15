@@ -34,6 +34,9 @@ $(function(){
   $("#clear").click(function(){
     $("#display").html('');
   });
+  $("#percent").click(function(val){
+    $("#display").html("."+val);
+  });
 
   $("#calculate").on("click",  { value: calc },function(event){
     console.log("event: ", event);
