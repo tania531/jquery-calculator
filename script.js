@@ -1,22 +1,39 @@
 // Add your javascript here
 $(function(){
-  var num1, num2, op, calc;
+  var num1, num2, num, op, calc;
   var calculation = [];
+  var nums = [];
+  var numbers = [];
+  var num1 = [];
   $(".row").on("click", ".col-md-3", function(e){
     var val = $(this).html();
 
-    // $(val).append(val);
-    console.log("$(val): ", $(val));
+    console.log("$(val): ",val);
     if($(this).hasClass("operator")){
+      // calc = $($(this)[0]).text();
       calc = $($(this)[0]).text();
-      console.log("$(this)[0]: ", $($(this)[0]).text());
       calculation.push(calc);
-    } else {
+    } else if ($(this).hasClass("num")){
+      console.log("$(this).html(): ", $(this).html());
+      // nums.push(num);
+      // console.log("nums: ", nums);
+      //
+      // numbers = nums.join('');
+
+      val = parseInt(val);
       calculation.push(val);
+
+
+    } else if($(this).has("#calculate")){
+      val = '';
     }
+    // calculation.push(numbers);
     $("#display").append(val);
   });
 
+  $("#clear").click(function(){
+    $("#display").html('');
+  });
 
   $("#calculate").on("click",  { value: calc },function(event){
     console.log("event: ", event);
@@ -28,16 +45,16 @@ $(function(){
       console.log("calculation: ", calculation);
       switch (calc) {
           case "+":
-            return sum(calc);
+            sum(calc);
             break;
           case "-":
-            return subtract();
+            subtract();
             break;
           case "*":
-            return product();
+            product();
             break;
           case "/":
-          return divide();
+            divide();
             break;
 
           default:
@@ -48,43 +65,60 @@ $(function(){
 
   function sum(){
     var plus = calculation.indexOf("+");
-    // calculation.split(plus);
+    var num1 = calculation.slice(0,plus);
+    var num2 = calculation.splice(plus + 1);
+    num1 = parseInt(num1.join(''));
+    num2 = parseInt(num2.join(''));
 
     calculation.splice(plus,1);
-    console.log("calculation: ", calculation);
-    var total =  calculation.reduce(function(acc, c){
-      return acc + c;
-    });
+
+    console.log("calculatio2: ", calculation);
+    // var total =  calculation.reduce(function(acc, c){
+    //   return acc + c;
+    // });
+    total =  num1 + num2;
     $("#display").html(total);
   }
 
   function subtract(){
-
     var minus = calculation.indexOf("-");
-    calculation.splice(calc,1);
-    var total =  calculation.reduce(function(acc, c){
-      return acc - c;
-    });
+    var num1 = calculation.slice(0,minus);
+    var num2 = calculation.splice(minus + 1);
+    num1 = parseInt(num1.join(''));
+    num2 = parseInt(num2.join(''));
+    // calculation.splice(minus,1);
+    // var total =  calculation.reduce(function(acc, c){
+    //   return acc - c;
+    total =  num1 - num2;
+    // });
     $("#display").html(total);
   }
 
   function product(){
-    console.log("product called: ");
     var op = calculation.indexOf("*");
-    calculation.splice(op,1);
-    var total =  calculation.reduce(function(acc, c){
-      return acc * c;
-    });
+    var num1 = calculation.slice(0,op);
+    var num2 = calculation.splice(op + 1);
+    num1 = parseInt(num1.join(''));
+    num2 = parseInt(num2.join(''));
+    // calculation.splice(op,1);
+    // var total =  calculation.reduce(function(acc, c){
+    //   return acc * c;
+    // });
+    total =  num1 * num2;
     $("#display").html(total);
   }
 
   function divide(){
-    console.log("div called: ");
     var op = calculation.indexOf("/");
-    calculation.splice(op,1);
-    var total =  calculation.reduce(function(acc, c){
-      return acc / c;
-    });
+    var num1 = calculation.slice(0,op);
+    var num2 = calculation.splice(op + 1);
+    num1 = parseInt(num1.join(''));
+    num2 = parseInt(num2.join(''));
+    // calculation.splice(op,1);
+    // var total =  calculation.reduce(function(acc, c){
+    //   return acc / c;
+    // });
+    total =  num1 / num2;
     $("#display").html(total);
   }
 });
