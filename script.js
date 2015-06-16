@@ -8,8 +8,8 @@ $(function(){
   // var perc = [];
   $(".row").on("click", ".col-md-3", function(e){
     var val = $(this).html();
-
     console.log("$(val): ",val);
+    console.log('$(this):', $(this));
     if($(this).hasClass("operator")){
       calc = $($(this)[0]).text();
       calculation.push(calc);
@@ -17,16 +17,14 @@ $(function(){
       console.log("$(this).html(): ", $(this).html());
       val = parseInt(val);
       calculation.push(val);
-    } else if($(this).has("#calculate")){
+    } else if($(this).attr('id') === "calculate"){
       val = '';
-    } else if($(this).has("#decimal")){
+    } else if($(this).attr('id') === "decimal"){
+      calculation.push('.');
+      console.log('VAL:',val);
+    } else if($(this).has("#sign")){
       calculation.push($(this).html());
-      $("#display").append(val);
-
-  } else if($(this).has("#sign")){
-    calculation.push($(this).html());
-    $("#display").append(val);
-  }
+    }
 
     $("#display").append(val);
   });
@@ -35,39 +33,73 @@ $(function(){
     $("#display").html('');
   });
 
-  $("#calculate").on("click",  { value: calc },function(event){
-    console.log("calc: ", calc);
-    doCalc(calc);
+  var op;
+  $("body").on("keypress", { value: op }, function(e) {
 
-    function doCalc(calc){
+    e.preventDefault();
 
-      console.log("calculation: ", calculation);
-      switch (calc) {
-          case "+":
-            sum(calc);
-            break;
-          case "-":
-            subtract();
-            break;
-          case "*":
-            product();
-            break;
-          case "/":
-            divide();
-            break;
-          case "%":
-            perc();
-            break;
-          case "+/-":
-            sign();
-            break;
+    var keycode = (e.keyCode ? e.keyCode : e.which);
+    var character = String.fromCharCode( e.keyCode || e.which );
+    getOp();
+    if (keycode !== 13) {
+      calculation.push(character);
+    }
+    function getOp(){
+      op = character.match(/[i%+-\/*]/);
+      if(op){
+        op = op[0];
+        if(op === 'i'){
+          op = "+/-";
+        }
+      }
+      return op;
+    }
 
+    console.log("op1: ", op);
+    if (keycode === 13) {
+      console.log("op: ", op);
+      doCalc(op);
+    }
 
-          default:
-            return;
-       }
-     }
+    $("#display").html(calculation);
   });
+
+  $("#calculate").on("click",  { value: calc },function(event){
+
+    doCalc(calc);
+  });
+
+  function doCalc(calc){
+    console.log("do calc called: ");
+    switch (calc) {
+        case "+":
+        console.log("sum called: ");
+          sum();
+          break;
+        case "-":
+        console.log("sub called: ");
+          subtract();
+          break;
+        case "*":
+        console.log("prod called: ");
+          product();
+          break;
+        case "/":
+        console.log("div called: ");
+          divide();
+          break;
+        case "%":
+        console.log("perc called: ");
+          perc();
+          break;
+        case "+/-":
+        console.log("sign called: ");
+          sign();
+          break;
+        default:
+          return;
+     }
+   }
 
   function sum(){
     var plus = calculation.indexOf("+");
@@ -78,7 +110,7 @@ $(function(){
 
     calculation.splice(plus,1);
 
-    console.log("calculatio2: ", calculation);
+
     // var total =  calculation.reduce(function(acc, c){
     //   return acc + c;
     // });
@@ -87,6 +119,7 @@ $(function(){
   }
 
   function subtract(){
+    console.log("calculatio sub: ", calculation);
     var minus = calculation.indexOf("-");
     var num1 = calculation.slice(0,minus);
     var num2 = calculation.splice(minus + 1);
